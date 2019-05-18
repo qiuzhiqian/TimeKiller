@@ -103,3 +103,17 @@ Qt::ItemFlags TaskModel::flags(const QModelIndex &index) const{
     flag |= Qt::ItemIsEditable;
     return flag;
 }
+
+bool TaskModel::insertRows(int row, int count, const QModelIndex &parent){
+    beginInsertRows(parent,row,row);
+
+    for(int i=0;i<count;i++){
+        Task tempTask("Day1");
+        tempTask.setTheme("default");
+        tempTask.setStart(QDateTime::currentDateTime());
+        tempTask.setEnd(QDateTime::currentDateTime().addSecs(60*60*12));
+        m_taskList->getData().insert(row+i,tempTask);
+    }
+    endInsertRows();
+    return true;
+}

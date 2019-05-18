@@ -114,5 +114,29 @@ bool ThemeList::importTheme(){
 }
 
 bool ThemeList::exportTheme(){
+    QJsonArray array;
+    for(auto& item:m_themeList){
+        QJsonObject themeObj;
+        themeObj.insert("name",item.getName());
+        themeObj.insert("lineWidth",item.getLineWidth());
+        themeObj.insert("lineColor",item.getLineColor().name(QColor::HexArgb));
+        themeObj.insert("borderWidth",item.getBorderWidth());
+        themeObj.insert("borderColor",item.getBorderColor().name(QColor::HexArgb));
+        themeObj.insert("bgColor",item.getBgColor().name(QColor::HexArgb));
+        array.append(themeObj);
+    }
+
+    QJsonObject jsonObj;
+    jsonObj.insert("theme",array);
+
+    QJsonDocument jsonDoc;
+    jsonDoc.setObject(jsonObj);
+    QByteArray byteArray = jsonDoc.toJson(QJsonDocument::Indented);
+
+    QFile file("theme.json");
+    if(file.open(QIODevice::ReadWrite|QIODevice::Truncate)){
+        file.write(byteArray);
+        file.close();
+    }
     return true;
 }

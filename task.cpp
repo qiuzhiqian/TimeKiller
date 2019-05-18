@@ -57,7 +57,8 @@ bool TaskList::importTask(){
     QFile file("task.json");
     if(file.open(QIODevice::ReadWrite)){
         QByteArray ba = file.readAll();
-        QJsonDocument jsonDoc = QJsonDocument::fromJson(ba);
+        QJsonParseError err;
+        QJsonDocument jsonDoc = QJsonDocument::fromJson(ba,&err);
         if(jsonDoc.isObject()){
             QJsonObject obj = jsonDoc.object();
             QJsonValue val = obj.value("task");
@@ -81,11 +82,34 @@ bool TaskList::importTask(){
                 }
             }
         }
+        file.close();
         return true;
     }
-    return true;
+    return false;
 }
 
 bool TaskList::exportTask(){
+    QJsonArray array;
+    for(auto& item:m_taskList){
+        QJsonObject taskObj;
+        taskObj.insert("name",item.getName());
+        taskObj.insert("theme",item.getTheme());
+        taskObj.insert("start",item.getStart().toString(Qt::ISODate));
+        taskObj.insert("end",item.getEnd().toString(Qt::ISODate));
+        array.append(taskObj);
+    }
+
+    QJsonObject jsonObj;
+    jsonObj.insert("task",array);
+
+    QJsonDocument jsonDoc;
+    jsonDoc.setObject(jsonObj);
+    QByteArray byteArray = jsonDoc.toJson(QJsonDocument::Indented);
+
+    QFile file("task.json");
+    if(file.open(QIODevice::ReadWrite|QIODevice::Truncate)){
+        file.write(byteArray);
+        file.close();
+    }
     return true;
 }

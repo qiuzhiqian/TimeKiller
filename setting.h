@@ -23,6 +23,8 @@ public:
 
     void themeLoad(Theme th);
 
+    //void addTask();
+
 private:
     Ui::Setting *ui;
 
@@ -35,6 +37,7 @@ private:
 
 public Q_SLOTS:
     void slt_themeChanged(int index);
+    void slt_addTask();
 };
 
 #endif // SETTING_H

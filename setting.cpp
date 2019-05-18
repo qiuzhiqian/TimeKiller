@@ -8,8 +8,12 @@
 #include <QFile>
 #include <QFileDialog>
 
+#include <QDebug>
+
 #include "taskmodel.h"
 #include "timedelegate.h"
+
+#include "boxdelegate.h"
 
 Setting::Setting(QWidget *parent) :
     QWidget(parent),
@@ -40,6 +44,15 @@ void Setting::init(){
     themeLoad(m_themeList->getData().at(0));
 
     connect(ui->cmb_themelist,SIGNAL(currentIndexChanged(int)),this,SLOT(slt_themeChanged(int)));
+    connect(ui->btn_addTask,SIGNAL(clicked(bool)),this,SLOT(slt_addTask()));
+
+    QStringList enumList;
+    BoxDelegate *boxDelegate = new BoxDelegate();
+    for(auto& item:m_themeList->getData()){
+        enumList.append(item.getName());
+    }
+    boxDelegate->setItemEnum(enumList);
+    ui->taskList->setItemDelegateForColumn(1,boxDelegate);
 
     TimeDelegate *timeDelegate_start = new TimeDelegate();
     TimeDelegate *timeDelegate_end = new TimeDelegate();
@@ -52,6 +65,8 @@ void Setting::init(){
 
 Setting::~Setting()
 {
+    m_taskList->exportTask();
+    m_themeList->exportTheme();
     delete ui;
 }
 
@@ -72,4 +87,8 @@ void Setting::themeLoad(Theme th){
 
 void Setting::slt_themeChanged(int index){
     themeLoad(m_themeList->getData().at(index));
+}
+
+void Setting::slt_addTask(){
+    ui->taskList->model()->insertRow(ui->taskList->model()->rowCount(QModelIndex()));
 }
