@@ -55,6 +55,9 @@ TimerKiller::TimerKiller(QWidget *parent) :
     QHBoxLayout *layout = new QHBoxLayout;
     this->setLayout(layout);
 
+    m_themes.importTheme();
+    m_tasks.importTask();
+
     m_rp = new RoundProgress(this);
     layout->setMargin(0);
     layout->setSpacing(0);
@@ -67,19 +70,43 @@ TimerKiller::TimerKiller(QWidget *parent) :
     sectimer->setInterval(500);
     connect(sectimer,SIGNAL(timeout()),this,SLOT(timerProgress()));
 
-    //startTime = QDateTime::currentDateTime();
-    //endTime = QDateTime::currentDateTime().addSecs(60);
-    startTime = QDateTime::fromString("2019-05-11T00:00:00",Qt::ISODate);
-    endTime = QDateTime::fromString("2019-05-13T00:00:00",Qt::ISODate);
-    qDebug()<<"start time:"<<startTime.toString(Qt::ISODate);
-    qDebug()<<"end time:"<<endTime.toString(Qt::ISODate);
+    if(m_tasks.getData().size()>0){
+        Task& currentTask = const_cast<Task&>(m_tasks.getData().at(0));
+        QString themeStr = currentTask.getTheme();
+        int themeIndex = -1;
+        for(int i=0;i<m_themes.getData().size();i++){
+            if(m_themes.getData()[i].getName() == themeStr){
+                themeIndex = i;
+                break;
+            }
+        }
 
-    if(endTime<startTime){
-        endTime = startTime;
+        if(themeIndex>=0){
+            Theme& currentTheme = const_cast<Theme&>(m_themes.getData().at(themeIndex));
+            m_rp->setLineWidth(currentTheme.getLineWidth());
+            m_rp->setLineColor(currentTheme.getLineColor());
+            m_rp->setBorderWidth(currentTheme.getBorderWidth());
+            m_rp->setBorderColor(currentTheme.getBorderColor());
+            m_rp->setBgColor(currentTheme.getBgColor());
+            m_rp->update();
+
+            startTime = currentTask.getStart();
+            endTime = currentTask.getEnd();
+            qDebug()<<"start time:"<<startTime.toString(Qt::ISODate);
+            qDebug()<<"end time:"<<endTime.toString(Qt::ISODate);
+
+            if(endTime<startTime){
+                endTime = startTime;
+            }
+            sectimer->start();
+        }
+        else{
+            //退出
+        }
     }
-    sectimer->start();
-
-    m_themes.importTheme();
+    else{
+        //退出
+    }
 }
 
 TimerKiller::~TimerKiller()
@@ -112,7 +139,7 @@ void TimerKiller::slt_show(){
 }
 
 void TimerKiller::slt_setting(){
-    Setting* setwidget = new Setting(&m_themes);
+    Setting* setwidget = new Setting(&m_themes,&m_tasks);
     setwidget->setWindowModality(Qt::ApplicationModal);
     setwidget->setAttribute(Qt::WA_DeleteOnClose);
     setwidget->show();
