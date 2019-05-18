@@ -8,6 +8,8 @@
 #include <QFile>
 #include <QFileDialog>
 
+#include "taskmodel.h"
+
 Setting::Setting(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::Setting)
@@ -37,6 +39,9 @@ void Setting::init(){
     themeLoad(m_themeList->getData().at(0));
 
     connect(ui->cmb_themelist,SIGNAL(currentIndexChanged(int)),this,SLOT(slt_themeChanged(int)));
+
+    TaskModel* taskmodel = new TaskModel(m_taskList);
+    ui->taskList->setModel(taskmodel);
 }
 
 Setting::~Setting()

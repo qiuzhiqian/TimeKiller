@@ -30,14 +30,16 @@ SOURCES += \
     roundprogress.cpp \
     setting.cpp \
     theme.cpp \
-    task.cpp
+    task.cpp \
+    taskmodel.cpp
 
 HEADERS += \
         timerkiller.h \
     roundprogress.h \
     setting.h \
     theme.h \
-    task.h
+    task.h \
+    taskmodel.h
 
 FORMS += \
         timerkiller.ui \
