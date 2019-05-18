@@ -9,6 +9,7 @@
 #include <QFileDialog>
 
 #include "taskmodel.h"
+#include "timedelegate.h"
 
 Setting::Setting(QWidget *parent) :
     QWidget(parent),
@@ -39,6 +40,11 @@ void Setting::init(){
     themeLoad(m_themeList->getData().at(0));
 
     connect(ui->cmb_themelist,SIGNAL(currentIndexChanged(int)),this,SLOT(slt_themeChanged(int)));
+
+    TimeDelegate *timeDelegate_start = new TimeDelegate();
+    TimeDelegate *timeDelegate_end = new TimeDelegate();
+    ui->taskList->setItemDelegateForColumn(2, timeDelegate_start);
+    ui->taskList->setItemDelegateForColumn(3, timeDelegate_end);
 
     TaskModel* taskmodel = new TaskModel(m_taskList);
     ui->taskList->setModel(taskmodel);

@@ -34,11 +34,7 @@ QVariant TaskModel::data(const QModelIndex &index, int role) const
     {
         Task& tempTask = const_cast<Task&>(m_taskList->getData().at(index.row()));
         switch(index.column()){
-        //case 0:{
-        //    return index.row();//在所有的index中显示1(当然也可以根据index的不同显示不同的值)
-        //}
         case 0:{
-
             return tempTask.getName();//在所有的index中显示1(当然也可以根据index的不同显示不同的值)
         }
         case 1:{

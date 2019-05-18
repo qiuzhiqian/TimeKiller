@@ -31,7 +31,8 @@ SOURCES += \
     setting.cpp \
     theme.cpp \
     task.cpp \
-    taskmodel.cpp
+    taskmodel.cpp \
+    timedelegate.cpp
 
 HEADERS += \
         timerkiller.h \
@@ -39,7 +40,8 @@ HEADERS += \
     setting.h \
     theme.h \
     task.h \
-    taskmodel.h
+    taskmodel.h \
+    timedelegate.h
 
 FORMS += \
         timerkiller.ui \
