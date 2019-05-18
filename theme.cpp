@@ -1,5 +1,9 @@
 #include "theme.h"
 
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QJsonArray>
+
 Theme::Theme() :
     m_lineWidth(10),
     m_lineColor(QColor(165, 220, 62,255)),
@@ -66,4 +70,49 @@ QColor Theme::getBorderColor(){
 
 QColor Theme::getBgColor(){
     return m_bgColor;
+}
+
+QList<Theme>& ThemeList::getData(){
+    return m_themeList;
+}
+
+bool ThemeList::importTheme(){
+    QFile file("theme.json");
+    if(file.open(QIODevice::ReadWrite)){
+        QByteArray ba = file.readAll();
+        QJsonDocument jsonDoc = QJsonDocument::fromJson(ba);
+        if(jsonDoc.isObject()){
+            QJsonObject obj = jsonDoc.object();
+            QJsonValue val = obj.value("theme");
+            if(val.isArray()){
+                QJsonArray arry = val.toArray();
+                for(auto item:arry){
+                    if(item.isObject()){
+                        Theme th;
+                        QJsonObject themeObj = item.toObject();
+                        QJsonValue name = themeObj.value("name");
+                        QJsonValue lineWidth = themeObj.value("lineWidth");
+                        QJsonValue lineColor = themeObj.value("lineColor");
+                        QJsonValue borderWidth = themeObj.value("borderWidth");
+                        QJsonValue borderColor = themeObj.value("borderColor");
+                        QJsonValue bgColor = themeObj.value("bgColor");
+
+                        th.setName(name.toString());
+                        th.setLineWidth(lineWidth.toInt());
+                        th.setLineColor(QColor(lineColor.toString()));
+                        th.setBorderWidth(borderWidth.toInt());
+                        th.setBorderColor(QColor(borderColor.toString()));
+                        th.setBgColor(QColor(bgColor.toString()));
+                        m_themeList.append(th);
+                    }
+                }
+            }
+        }
+        return true;
+    }
+    return true;
+}
+
+bool ThemeList::exportTheme(){
+    return true;
 }

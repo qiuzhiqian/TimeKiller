@@ -78,6 +78,8 @@ TimerKiller::TimerKiller(QWidget *parent) :
         endTime = startTime;
     }
     sectimer->start();
+
+    m_themes.importTheme();
 }
 
 TimerKiller::~TimerKiller()
@@ -110,7 +112,7 @@ void TimerKiller::slt_show(){
 }
 
 void TimerKiller::slt_setting(){
-    Setting* setwidget = new Setting();
+    Setting* setwidget = new Setting(&m_themes);
     setwidget->setWindowModality(Qt::ApplicationModal);
     setwidget->setAttribute(Qt::WA_DeleteOnClose);
     setwidget->show();

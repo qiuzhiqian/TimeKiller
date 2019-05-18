@@ -12,6 +12,9 @@
 
 #include "roundprogress.h"
 
+#include "theme.h"
+#include "task.h"
+
 namespace Ui {
 class TimerKiller;
 }
@@ -38,6 +41,9 @@ private:
     QAction* showAction;
     QAction* setAction;
     QAction* closeAction;
+
+    ThemeList m_themes;
+    TaskList m_tasks;
 
 public Q_SLOTS:
     void timerProgress();

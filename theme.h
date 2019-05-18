@@ -41,4 +41,16 @@ private:
     QColor m_bgColor;         //背景颜色
 };
 
+class ThemeList{
+public:
+    ThemeList(){}
+    QList<Theme>& getData();
+
+    bool importTheme();
+    bool exportTheme();
+
+private:
+    QList<Theme> m_themeList;
+};
+
 #endif // THEME_H

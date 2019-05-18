@@ -6,6 +6,7 @@
 #include "roundprogress.h"
 
 #include "theme.h"
+#include "task.h"
 
 namespace Ui {
 class Setting;
@@ -16,10 +17,9 @@ class Setting : public QWidget
     Q_OBJECT
 
 public:
-    Setting(QWidget *parent = nullptr);
+    explicit Setting(QWidget *parent = nullptr);
+    Setting(ThemeList* tl,TaskList* tkl, QWidget *parent = nullptr);
     ~Setting();
-
-    bool loadThemeJson();
 
     void themeLoad(Theme th);
 
@@ -28,7 +28,10 @@ private:
 
     RoundProgress* m_rp;
 
-    QList<Theme> m_themeList;
+    ThemeList* m_themeList;
+    TaskList* m_taskList;
+
+    void init();
 
 public Q_SLOTS:
     void slt_themeChanged(int index);
