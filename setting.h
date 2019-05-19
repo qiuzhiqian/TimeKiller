@@ -38,6 +38,7 @@ private:
 public Q_SLOTS:
     void slt_themeChanged(int index);
     void slt_addTask();
+    void slt_removeTask(int row,int column);
 };
 
 #endif // SETTING_H

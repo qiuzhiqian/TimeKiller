@@ -108,7 +108,7 @@ Qt::ItemFlags TaskModel::flags(const QModelIndex &index) const{
 }
 
 bool TaskModel::insertRows(int row, int count, const QModelIndex &parent){
-    beginInsertRows(parent,row,row);
+    beginInsertRows(parent,row,row+count-1);
 
     for(int i=0;i<count;i++){
         Task tempTask("Day1");
@@ -118,5 +118,15 @@ bool TaskModel::insertRows(int row, int count, const QModelIndex &parent){
         m_taskList->getData().insert(row+i,tempTask);
     }
     endInsertRows();
+    return true;
+}
+
+bool TaskModel::removeRows(int row, int count, const QModelIndex &parent){
+    beginRemoveRows(parent,row,row+count-1);
+
+    for(int i=0;i<count;i++){
+        m_taskList->getData().removeAt(row+i);
+    }
+    endRemoveRows();
     return true;
 }

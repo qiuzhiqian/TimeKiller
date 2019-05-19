@@ -62,6 +62,7 @@ void Setting::init(){
 
     ButtonDelegate *btnDeletage = new ButtonDelegate();
     ui->taskList->setItemDelegateForColumn(4, btnDeletage);
+    connect(btnDeletage,SIGNAL(sgn_clicked(int,int)),this,SLOT(slt_removeTask(int,int)));
 
     TaskModel* taskmodel = new TaskModel(m_taskList);
     ui->taskList->setModel(taskmodel);
@@ -101,4 +102,10 @@ void Setting::slt_themeChanged(int index){
 
 void Setting::slt_addTask(){
     ui->taskList->model()->insertRow(ui->taskList->model()->rowCount(QModelIndex()));
+}
+
+void Setting::slt_removeTask(int row,int column){
+    if(column == 4){
+        ui->taskList->model()->removeRow(row);
+    }
 }

@@ -52,15 +52,10 @@ bool ButtonDelegate::editorEvent(QEvent *event, QAbstractItemModel *model, const
         if (option.rect.adjusted(4, 4, -4, -4).contains(e->x(), e->y()) && m_btns.contains(index)) {
             m_btns.value(index)->state &= (~QStyle::State_Sunken);
 
-            //QDialog *d = new QDialog();
-            //
-            //d->setGeometry(0, 0, 200, 200);
-            //d->move(QApplication::desktop()->screenGeometry().center() - d->rect().center());
-            //d->show();
-            //showMsg(tr("btn1 column %1").arg(index.column()));
-            QMessageBox msg;
-            msg.setText(tr("btn1 row %1").arg(index.row()));
-            msg.exec();
+            //QMessageBox msg;
+            //msg.setText(tr("btn1 row %1").arg(index.row()));
+            //msg.exec();
+            emit sgn_clicked(index.row(),index.column());
         }
     }
 }

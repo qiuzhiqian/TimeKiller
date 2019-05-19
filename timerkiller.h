@@ -45,6 +45,9 @@ private:
     ThemeList m_themes;
     TaskList m_tasks;
 
+    int m_currentIndex;
+    QTimer* m_loopTimer;
+
 public Q_SLOTS:
     void timerProgress();
 
@@ -54,6 +57,8 @@ public Q_SLOTS:
 
     void slt_drag(int x,int y);
     void slt_rightClicked(QPoint pos);
+
+    void slt_taskChange();
 
 protected:
 };

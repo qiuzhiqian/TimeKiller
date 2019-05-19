@@ -9,7 +9,8 @@
 
 TimerKiller::TimerKiller(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::TimerKiller)
+    ui(new Ui::TimerKiller),
+    m_currentIndex(0)
 {
     ui->setupUi(this);
 
@@ -63,7 +64,7 @@ TimerKiller::TimerKiller(QWidget *parent) :
     layout->setSpacing(0);
     layout->addWidget(m_rp);
     connect(m_rp,SIGNAL(sgn_drag(int,int)),this,SLOT(slt_drag(int,int)));
-    m_rp->setToolTip(tr("this is tool tip"));
+    //m_rp->setToolTip(tr("this is tool tip"));
     connect(m_rp,SIGNAL(sgn_rightClicked(QPoint)),this,SLOT(slt_rightClicked(QPoint)));
 
     sectimer = new QTimer();
@@ -71,7 +72,7 @@ TimerKiller::TimerKiller(QWidget *parent) :
     connect(sectimer,SIGNAL(timeout()),this,SLOT(timerProgress()));
 
     if(m_tasks.getData().size()>0){
-        Task& currentTask = const_cast<Task&>(m_tasks.getData().at(0));
+        /*Task& currentTask = const_cast<Task&>(m_tasks.getData().at(0));
         QString themeStr = currentTask.getTheme();
         int themeIndex = -1;
         for(int i=0;i<m_themes.getData().size();i++){
@@ -102,7 +103,14 @@ TimerKiller::TimerKiller(QWidget *parent) :
         }
         else{
             //退出
-        }
+        }*/
+        m_currentIndex = -1;
+        slt_taskChange();
+
+        m_loopTimer = new QTimer();
+        m_loopTimer->setInterval(10*1000);
+        connect(m_loopTimer,SIGNAL(timeout()),this,SLOT(slt_taskChange()));
+        m_loopTimer->start();
     }
     else{
         //退出
@@ -187,3 +195,44 @@ void TimerKiller::slt_rightClicked(QPoint pos){
     trayIconMenu->exec(pos);
 }
 
+void TimerKiller::slt_taskChange(){
+    if(m_currentIndex<m_tasks.getData().size()-1){
+        m_currentIndex++;
+    }
+    else{
+        m_currentIndex = 0;
+    }
+
+    Task& currentTask = const_cast<Task&>(m_tasks.getData().at(m_currentIndex));
+    QString themeStr = currentTask.getTheme();
+    int themeIndex = -1;
+    for(int i=0;i<m_themes.getData().size();i++){
+        if(m_themes.getData()[i].getName() == themeStr){
+            themeIndex = i;
+            break;
+        }
+    }
+
+    if(themeIndex>=0){
+        sectimer->stop();
+        Theme& currentTheme = const_cast<Theme&>(m_themes.getData().at(themeIndex));
+        m_rp->setLineWidth(currentTheme.getLineWidth());
+        m_rp->setLineColor(currentTheme.getLineColor());
+        m_rp->setBorderWidth(currentTheme.getBorderWidth());
+        m_rp->setBorderColor(currentTheme.getBorderColor());
+        m_rp->setBgColor(currentTheme.getBgColor());
+        //m_rp->update();
+
+        m_rp->setToolTip(currentTask.getName());
+
+        startTime = currentTask.getStart();
+        endTime = currentTask.getEnd();
+        qDebug()<<"start time:"<<startTime.toString(Qt::ISODate);
+        qDebug()<<"end time:"<<endTime.toString(Qt::ISODate);
+
+        if(endTime<startTime){
+            endTime = startTime;
+        }
+        sectimer->start();
+    }
+}

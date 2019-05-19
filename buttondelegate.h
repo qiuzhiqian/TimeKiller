@@ -13,7 +13,7 @@ public:
     bool editorEvent(QEvent *event, QAbstractItemModel *model, const QStyleOptionViewItem &option, const QModelIndex &index);
 
 signals:
-
+    void sgn_clicked(int row,int column);
 public slots:
 
 private:
