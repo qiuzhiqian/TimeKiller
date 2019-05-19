@@ -1,0 +1,20 @@
+{
+    "theme": [
+        {
+            "bgColor": "#ff3398db",
+            "borderColor": "#ffd7d7d7",
+            "borderWidth": 5,
+            "lineColor": "#ffa5dc3e",
+            "lineWidth": 10,
+            "name": "default"
+        },
+        {
+            "bgColor": "#aa23b1cc",
+            "borderColor": "#ff921b80",
+            "borderWidth": 8,
+            "lineColor": "#ff006622",
+            "lineWidth": 12,
+            "name": "diy1"
+        }
+    ]
+}
