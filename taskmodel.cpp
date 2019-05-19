@@ -2,12 +2,12 @@
 
 TaskModel::TaskModel(QObject *parent):QAbstractTableModel(parent)
 {
-    m_hHeader << "Name" <<"Theme"<<"Start"<<"End";
+    m_hHeader << "Name" <<"Theme"<<"Start"<<"End"<<"";
 }
 
 TaskModel::TaskModel(TaskList* list,QObject *parent):QAbstractTableModel(parent),m_taskList(list)
 {
-    m_hHeader << "Name" <<"Theme"<<"Start"<<"End";
+    m_hHeader << "Name" <<"Theme"<<"Start"<<"End"<<"";
 }
 
 int TaskModel::rowCount(const QModelIndex &parent) const
@@ -17,7 +17,7 @@ int TaskModel::rowCount(const QModelIndex &parent) const
 
 int TaskModel::columnCount(const QModelIndex &parent) const
 {
-    return 4;//
+    return 5;//
 }
 
 QVariant TaskModel::data(const QModelIndex &index, int role) const
@@ -45,6 +45,9 @@ QVariant TaskModel::data(const QModelIndex &index, int role) const
         }
         case 3:{
             return tempTask.getEnd().toString(Qt::ISODate);//在所有的index中显示1(当然也可以根据index的不同显示不同的值)
+        }
+        case 4:{
+            break;
         }
         }
 

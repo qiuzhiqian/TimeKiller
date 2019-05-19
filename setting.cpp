@@ -14,6 +14,7 @@
 #include "timedelegate.h"
 
 #include "boxdelegate.h"
+#include "buttondelegate.h"
 
 Setting::Setting(QWidget *parent) :
     QWidget(parent),
@@ -59,8 +60,17 @@ void Setting::init(){
     ui->taskList->setItemDelegateForColumn(2, timeDelegate_start);
     ui->taskList->setItemDelegateForColumn(3, timeDelegate_end);
 
+    ButtonDelegate *btnDeletage = new ButtonDelegate();
+    ui->taskList->setItemDelegateForColumn(4, btnDeletage);
+
     TaskModel* taskmodel = new TaskModel(m_taskList);
     ui->taskList->setModel(taskmodel);
+
+    ui->taskList->setColumnWidth(0,65);
+    ui->taskList->setColumnWidth(1,85);
+    ui->taskList->setColumnWidth(2,220);
+    ui->taskList->setColumnWidth(3,220);
+    ui->taskList->setColumnWidth(4,45);
 }
 
 Setting::~Setting()
