@@ -40,6 +40,7 @@ private:
     QMenu* trayIconMenu;
     QAction* showAction;
     QAction* setAction;
+    QAction* aboutAction;
     QAction* closeAction;
 
     ThemeList m_themes;
@@ -53,6 +54,7 @@ public Q_SLOTS:
 
     void slt_show();
     void slt_setting();
+    void slt_about();
     void slt_close();
 
     void slt_drag(int x,int y);

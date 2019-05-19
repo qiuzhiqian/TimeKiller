@@ -4,6 +4,7 @@
 #include <QDebug>
 #include <QHBoxLayout>
 #include <QScreen>
+#include <QMessageBox>
 
 #include "setting.h"
 
@@ -39,6 +40,11 @@ TimerKiller::TimerKiller(QWidget *parent) :
     //setAction->setIcon(QIcon(":/icons/restore.bmp"));
     connect(setAction,SIGNAL(triggered()),this,SLOT(slt_setting()));
 
+    aboutAction = new QAction(this);
+    aboutAction->setText(tr("关于"));
+    //setAction->setIcon(QIcon(":/icons/restore.bmp"));
+    connect(aboutAction,SIGNAL(triggered()),this,SLOT(slt_about()));
+
     closeAction = new QAction(this);
     closeAction->setText(tr("退出"));
     //closeAction->setIcon(QIcon(":/icons/shutdown03.jpg"));
@@ -47,6 +53,7 @@ TimerKiller::TimerKiller(QWidget *parent) :
     trayIconMenu = new QMenu(this);
     trayIconMenu->addAction(showAction);
     trayIconMenu->addAction(setAction);
+    trayIconMenu->addAction(aboutAction);
     trayIconMenu->addSeparator();
     trayIconMenu->addAction(closeAction);
 
@@ -151,6 +158,12 @@ void TimerKiller::slt_setting(){
     setwidget->setWindowModality(Qt::ApplicationModal);
     setwidget->setAttribute(Qt::WA_DeleteOnClose);
     setwidget->show();
+}
+
+void TimerKiller::slt_about(){
+    QMessageBox msg;
+    msg.setText(tr("TimeKiller v1.0.0"));
+    msg.exec();
 }
 
 void TimerKiller::slt_close(){
