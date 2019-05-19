@@ -30,7 +30,7 @@ QVariant TaskModel::data(const QModelIndex &index, int role) const
     {
         return int(Qt::AlignHCenter | Qt::AlignVCenter);
     }
-    else if(Qt::DisplayRole == role)            //这里这样写是为了过滤掉其他role(例如过滤掉checkBox)
+    else if(Qt::DisplayRole == role | Qt::EditRole == role)            //这里这样写是为了过滤掉其他role(例如过滤掉checkBox)
     {
         Task& tempTask = const_cast<Task&>(m_taskList->getData().at(index.row()));
         switch(index.column()){
