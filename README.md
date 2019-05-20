@@ -1,5 +1,5 @@
 # TimeKiller  
-*TimeKiller*这个词中文要怎么翻译，你们看这边，是这么个意思就行。^_^.
+*TimeKiller*这个词中文要怎么翻译，你们看着办，是这么个意思就行。^_^.
 
 受*即刻App*中[*今年的时间进度条*](https://m.okjike.com/topics/5885f11ba4c2f200136c9552?source_username=cb740492-9c27-4c03-8f92-a8599ac45fe5)圈子动态的启发，想到我们可能更需要一款桌面端的时间进度条UI软件，这个软件能够实时的在桌面最前端长期停留并显示，以不断的提醒我们，自己规划的deadline还剩多少了，自己摸鱼又浪费了多长时间，是否需要996来挽救一下时间的流逝。^_^.
 
@@ -19,8 +19,8 @@
 软件中，UI控件的绘制技巧参考了[*刘典武*](https://www.zhihu.com/people/feiyangqingyun/activities)的部分设计逻辑，在此表示感谢。
 
 # 软件预览
-## 即可原动态  
-![这是即可原动态](./doc/preview1.png)  
+## 即刻原动态  
+![这是即刻原动态](./doc/preview1.png)  
 
 ## 本软件桌面显示效果
 ![本软件桌面显示效果](./doc/preview3.gif)
