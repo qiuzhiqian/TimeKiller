@@ -34,7 +34,8 @@ SOURCES += \
     taskmodel.cpp \
     timedelegate.cpp \
     boxdelegate.cpp \
-    buttondelegate.cpp
+    buttondelegate.cpp \
+    progressbarwater.cpp
 
 HEADERS += \
         timerkiller.h \
@@ -45,7 +46,8 @@ HEADERS += \
     taskmodel.h \
     timedelegate.h \
     boxdelegate.h \
-    buttondelegate.h
+    buttondelegate.h \
+    progressbarwater.h
 
 FORMS += \
         timerkiller.ui \

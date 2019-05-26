@@ -5,13 +5,21 @@
 
 #include <QColor>
 
-class Theme
-{
+class Theme:public QObject{
 public:
-    Theme();
-    Theme(const QString& name);
+    explicit Theme(const QString& name = "default");
 
     void setName(const QString& name);
+    QString getName();
+private:
+    QString m_name;
+};
+
+class BallTheme :public Theme
+{
+public:
+    BallTheme(const QString& name = "default");
+
     //设置线条宽度+颜色
     void setLineWidth(int lineWidth);
     void setLineColor(const QColor &lineColor);
@@ -22,7 +30,6 @@ public:
     //void setBorderRadius(int borderRadius);
     void setBgColor(const QColor &bgColor);
 
-    QString getName();
     //设置线条宽度+颜色
     int getLineWidth();
     QColor getLineColor();
@@ -33,7 +40,6 @@ public:
     QColor getBgColor();
 
 private:
-    QString m_name;
     int m_lineWidth;          //线条宽度
     QColor m_lineColor;       //线条颜色
     int m_borderWidth;        //边框宽度
@@ -41,16 +47,44 @@ private:
     QColor m_bgColor;         //背景颜色
 };
 
+class WaterTheme :public Theme{
+public:
+    WaterTheme(const QString& name = "default");
+
+    void setWaterDensity(double val);
+    void setWaterHeight(double val);
+    void setBorderWidth(int borderWidth);
+    void setUsedColor(const QColor &clr);
+    void setUnUsedColor(const QColor &clr);
+    void setTextColor(const QColor &clr);
+
+    double getWaterDensity();
+    double getWaterHeight();
+    int getBorderWidth();
+    QColor getUsedColor();
+    QColor getUnUsedColor();
+    QColor getTextColor();
+
+private:
+    double m_waterDensity;
+    double m_waterHeight;
+
+    int m_borderWidth;
+    QColor m_usedColor;
+    QColor m_unUsedColor;
+    QColor m_textColor;
+};
+
 class ThemeList{
 public:
     ThemeList(){}
-    QList<Theme>& getData();
+    QList<Theme*>& getData();
 
     bool importTheme();
     bool exportTheme();
 
 private:
-    QList<Theme> m_themeList;
+    QList<Theme*> m_themeList;
 };
 
 #endif // THEME_H

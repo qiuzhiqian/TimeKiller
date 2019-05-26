@@ -11,6 +11,7 @@
 #include <QPoint>
 
 #include "roundprogress.h"
+#include "progressbarwater.h"
 
 #include "theme.h"
 #include "task.h"
@@ -31,7 +32,7 @@ private:
     Ui::TimerKiller *ui;
     QSystemTrayIcon* m_systemTray;
 
-    RoundProgress* m_rp;
+    QWidget* m_rp;
     QTimer* sectimer;
 
     QDateTime startTime;
@@ -48,6 +49,8 @@ private:
 
     int m_currentIndex;
     QTimer* m_loopTimer;
+
+    void taskWedgitShow(Theme *th);
 
 public Q_SLOTS:
     void timerProgress();

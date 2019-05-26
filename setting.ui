@@ -17,7 +17,7 @@
    <item>
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="tab">
       <attribute name="title">
@@ -63,149 +63,12 @@
       <attribute name="title">
        <string>主题</string>
       </attribute>
-      <widget class="QGroupBox" name="groupBox">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>160</y>
-         <width>531</width>
-         <height>201</height>
-        </rect>
-       </property>
-       <property name="title">
-        <string>编辑</string>
-       </property>
-       <widget class="QLabel" name="label_2">
-        <property name="geometry">
-         <rect>
-          <x>20</x>
-          <y>40</y>
-          <width>72</width>
-          <height>15</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>线条颜色</string>
-        </property>
-       </widget>
-       <widget class="QLabel" name="label_4">
-        <property name="geometry">
-         <rect>
-          <x>250</x>
-          <y>40</y>
-          <width>72</width>
-          <height>15</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>线条宽度</string>
-        </property>
-       </widget>
-       <widget class="QLineEdit" name="le_linewidth">
-        <property name="geometry">
-         <rect>
-          <x>370</x>
-          <y>34</y>
-          <width>113</width>
-          <height>21</height>
-         </rect>
-        </property>
-       </widget>
-       <widget class="QLabel" name="label_5">
-        <property name="geometry">
-         <rect>
-          <x>20</x>
-          <y>100</y>
-          <width>81</width>
-          <height>16</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>边框颜色</string>
-        </property>
-       </widget>
-       <widget class="QLabel" name="label_7">
-        <property name="geometry">
-         <rect>
-          <x>250</x>
-          <y>100</y>
-          <width>81</width>
-          <height>16</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>边框宽度</string>
-        </property>
-       </widget>
-       <widget class="QLineEdit" name="le_borderwidth">
-        <property name="geometry">
-         <rect>
-          <x>370</x>
-          <y>100</y>
-          <width>113</width>
-          <height>21</height>
-         </rect>
-        </property>
-       </widget>
-       <widget class="QLabel" name="label_8">
-        <property name="geometry">
-         <rect>
-          <x>20</x>
-          <y>160</y>
-          <width>72</width>
-          <height>15</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>背景颜色</string>
-        </property>
-       </widget>
-       <widget class="QPushButton" name="btn_linecolor">
-        <property name="geometry">
-         <rect>
-          <x>130</x>
-          <y>27</y>
-          <width>28</width>
-          <height>28</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-       </widget>
-       <widget class="QPushButton" name="btn_bordercolor">
-        <property name="geometry">
-         <rect>
-          <x>130</x>
-          <y>90</y>
-          <width>28</width>
-          <height>28</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-       </widget>
-       <widget class="QPushButton" name="btn_bgcolor">
-        <property name="geometry">
-         <rect>
-          <x>130</x>
-          <y>150</y>
-          <width>28</width>
-          <height>28</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-       </widget>
-      </widget>
       <widget class="QWidget" name="horizontalLayoutWidget">
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>100</y>
-         <width>333</width>
+         <y>10</y>
+         <width>451</width>
          <height>41</height>
         </rect>
        </property>
@@ -248,6 +111,340 @@
          </widget>
         </item>
        </layout>
+      </widget>
+      <widget class="QComboBox" name="cmb_style">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>70</y>
+         <width>87</width>
+         <height>22</height>
+        </rect>
+       </property>
+       <item>
+        <property name="text">
+         <string>Round</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Water</string>
+        </property>
+       </item>
+      </widget>
+      <widget class="QStackedWidget" name="stackedWidget">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>110</y>
+         <width>441</width>
+         <height>351</height>
+        </rect>
+       </property>
+       <property name="currentIndex">
+        <number>1</number>
+       </property>
+       <widget class="QWidget" name="page_round">
+        <widget class="QGroupBox" name="groupBox">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>10</y>
+           <width>211</width>
+           <height>231</height>
+          </rect>
+         </property>
+         <property name="title">
+          <string>编辑</string>
+         </property>
+         <widget class="QLabel" name="label_2">
+          <property name="geometry">
+           <rect>
+            <x>20</x>
+            <y>40</y>
+            <width>72</width>
+            <height>15</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>线条颜色</string>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_4">
+          <property name="geometry">
+           <rect>
+            <x>20</x>
+            <y>160</y>
+            <width>72</width>
+            <height>15</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>线条宽度</string>
+          </property>
+         </widget>
+         <widget class="QLineEdit" name="le_linewidth">
+          <property name="geometry">
+           <rect>
+            <x>130</x>
+            <y>150</y>
+            <width>41</width>
+            <height>21</height>
+           </rect>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_5">
+          <property name="geometry">
+           <rect>
+            <x>20</x>
+            <y>80</y>
+            <width>81</width>
+            <height>16</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>边框颜色</string>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_7">
+          <property name="geometry">
+           <rect>
+            <x>20</x>
+            <y>200</y>
+            <width>81</width>
+            <height>16</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>边框宽度</string>
+          </property>
+         </widget>
+         <widget class="QLineEdit" name="le_borderwidth">
+          <property name="geometry">
+           <rect>
+            <x>130</x>
+            <y>190</y>
+            <width>41</width>
+            <height>21</height>
+           </rect>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_8">
+          <property name="geometry">
+           <rect>
+            <x>20</x>
+            <y>120</y>
+            <width>72</width>
+            <height>15</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>背景颜色</string>
+          </property>
+         </widget>
+         <widget class="QPushButton" name="btn_linecolor">
+          <property name="geometry">
+           <rect>
+            <x>130</x>
+            <y>27</y>
+            <width>28</width>
+            <height>28</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+         <widget class="QPushButton" name="btn_bordercolor">
+          <property name="geometry">
+           <rect>
+            <x>130</x>
+            <y>70</y>
+            <width>28</width>
+            <height>28</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+         <widget class="QPushButton" name="btn_bgcolor">
+          <property name="geometry">
+           <rect>
+            <x>130</x>
+            <y>110</y>
+            <width>28</width>
+            <height>28</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </widget>
+       </widget>
+       <widget class="QWidget" name="page_water">
+        <widget class="QGroupBox" name="groupBox_2">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>10</y>
+           <width>211</width>
+           <height>281</height>
+          </rect>
+         </property>
+         <property name="title">
+          <string>编辑</string>
+         </property>
+         <widget class="QLabel" name="label_3">
+          <property name="geometry">
+           <rect>
+            <x>20</x>
+            <y>40</y>
+            <width>91</width>
+            <height>16</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>波浪密度系数</string>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_6">
+          <property name="geometry">
+           <rect>
+            <x>20</x>
+            <y>160</y>
+            <width>72</width>
+            <height>15</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>使用颜色</string>
+          </property>
+         </widget>
+         <widget class="QLineEdit" name="le_waterDensity">
+          <property name="geometry">
+           <rect>
+            <x>130</x>
+            <y>30</y>
+            <width>41</width>
+            <height>25</height>
+           </rect>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_9">
+          <property name="geometry">
+           <rect>
+            <x>20</x>
+            <y>80</y>
+            <width>91</width>
+            <height>16</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>波浪高度系数</string>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_10">
+          <property name="geometry">
+           <rect>
+            <x>20</x>
+            <y>200</y>
+            <width>81</width>
+            <height>16</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>未使用颜色</string>
+          </property>
+         </widget>
+         <widget class="QLineEdit" name="le_waterHeight">
+          <property name="geometry">
+           <rect>
+            <x>130</x>
+            <y>70</y>
+            <width>41</width>
+            <height>25</height>
+           </rect>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_11">
+          <property name="geometry">
+           <rect>
+            <x>20</x>
+            <y>120</y>
+            <width>72</width>
+            <height>15</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>边框宽度</string>
+          </property>
+         </widget>
+         <widget class="QPushButton" name="btn_usedcolor">
+          <property name="geometry">
+           <rect>
+            <x>130</x>
+            <y>150</y>
+            <width>28</width>
+            <height>28</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+         <widget class="QPushButton" name="btn_unUsedcolor">
+          <property name="geometry">
+           <rect>
+            <x>130</x>
+            <y>190</y>
+            <width>28</width>
+            <height>28</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+         <widget class="QPushButton" name="btn_textcolor">
+          <property name="geometry">
+           <rect>
+            <x>130</x>
+            <y>230</y>
+            <width>28</width>
+            <height>28</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_12">
+          <property name="geometry">
+           <rect>
+            <x>20</x>
+            <y>240</y>
+            <width>72</width>
+            <height>15</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>文本颜色</string>
+          </property>
+         </widget>
+         <widget class="QLineEdit" name="le_waterborderWidth">
+          <property name="geometry">
+           <rect>
+            <x>130</x>
+            <y>110</y>
+            <width>41</width>
+            <height>25</height>
+           </rect>
+          </property>
+         </widget>
+        </widget>
+       </widget>
       </widget>
      </widget>
     </widget>

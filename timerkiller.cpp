@@ -11,7 +11,8 @@
 TimerKiller::TimerKiller(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::TimerKiller),
-    m_currentIndex(0)
+    m_currentIndex(0),
+    m_rp(nullptr)
 {
     ui->setupUi(this);
 
@@ -66,51 +67,11 @@ TimerKiller::TimerKiller(QWidget *parent) :
     m_themes.importTheme();
     m_tasks.importTask();
 
-    m_rp = new RoundProgress(this);
-    layout->setMargin(0);
-    layout->setSpacing(0);
-    layout->addWidget(m_rp);
-    connect(m_rp,SIGNAL(sgn_drag(int,int)),this,SLOT(slt_drag(int,int)));
-    //m_rp->setToolTip(tr("this is tool tip"));
-    connect(m_rp,SIGNAL(sgn_rightClicked(QPoint)),this,SLOT(slt_rightClicked(QPoint)));
-
     sectimer = new QTimer();
     sectimer->setInterval(500);
     connect(sectimer,SIGNAL(timeout()),this,SLOT(timerProgress()));
 
     if(m_tasks.getData().size()>0){
-        /*Task& currentTask = const_cast<Task&>(m_tasks.getData().at(0));
-        QString themeStr = currentTask.getTheme();
-        int themeIndex = -1;
-        for(int i=0;i<m_themes.getData().size();i++){
-            if(m_themes.getData()[i].getName() == themeStr){
-                themeIndex = i;
-                break;
-            }
-        }
-
-        if(themeIndex>=0){
-            Theme& currentTheme = const_cast<Theme&>(m_themes.getData().at(themeIndex));
-            m_rp->setLineWidth(currentTheme.getLineWidth());
-            m_rp->setLineColor(currentTheme.getLineColor());
-            m_rp->setBorderWidth(currentTheme.getBorderWidth());
-            m_rp->setBorderColor(currentTheme.getBorderColor());
-            m_rp->setBgColor(currentTheme.getBgColor());
-            m_rp->update();
-
-            startTime = currentTask.getStart();
-            endTime = currentTask.getEnd();
-            qDebug()<<"start time:"<<startTime.toString(Qt::ISODate);
-            qDebug()<<"end time:"<<endTime.toString(Qt::ISODate);
-
-            if(endTime<startTime){
-                endTime = startTime;
-            }
-            sectimer->start();
-        }
-        else{
-            //退出
-        }*/
         m_currentIndex = -1;
         slt_taskChange();
 
@@ -122,6 +83,8 @@ TimerKiller::TimerKiller(QWidget *parent) :
     else{
         //退出
     }
+
+
 }
 
 TimerKiller::~TimerKiller()
@@ -136,17 +99,36 @@ TimerKiller::~TimerKiller()
 void TimerKiller::timerProgress(){
     QDateTime nowTime = QDateTime::currentDateTime();
     //qDebug()<<"nowTime:"<<nowTime.toString(Qt::ISODate);
-    if(endTime>startTime && nowTime>=startTime && nowTime<=endTime){
-        qint64 sumVal = endTime.toMSecsSinceEpoch() - startTime.toMSecsSinceEpoch();
-        qint64 usedVal = nowTime.toMSecsSinceEpoch() - startTime.toMSecsSinceEpoch();
+    const std::type_info& ti = typeid (*m_rp);
+    double showVal = 0;
+    if(ti == typeid (RoundProgress)){
+        if(endTime>startTime && nowTime>=startTime && nowTime<=endTime){
+            qint64 sumVal = endTime.toMSecsSinceEpoch() - startTime.toMSecsSinceEpoch();
+            qint64 usedVal = nowTime.toMSecsSinceEpoch() - startTime.toMSecsSinceEpoch();
 
-        double val = (double(usedVal) / sumVal)*360.0;
-        //qDebug()<<"sumVal:"<<sumVal<<" usedVal:"<<usedVal<<" val:"<<val<<" db:"<<db*360;
-        m_rp->setValue(val);
+            showVal = (double(usedVal) / sumVal)*360.0;
+            //qDebug()<<"sumVal:"<<sumVal<<" usedVal:"<<usedVal<<" val:"<<val<<" db:"<<db*360;
+        }
+        else if(endTime>startTime && nowTime>endTime){
+            showVal = 360;
+        }
+        RoundProgress* tempRp = (RoundProgress*)m_rp;
+        tempRp->setValue(showVal);
     }
-    else if(endTime>startTime && nowTime>endTime){
-        m_rp->setValue(360);
+    else if(ti == typeid (ProgressBarWater)){
+        if(endTime>startTime && nowTime>=startTime && nowTime<=endTime){
+            qint64 sumVal = endTime.toMSecsSinceEpoch() - startTime.toMSecsSinceEpoch();
+            qint64 usedVal = nowTime.toMSecsSinceEpoch() - startTime.toMSecsSinceEpoch();
+
+            showVal = (double(usedVal) / sumVal)*1000.0;
+        }
+        else if(endTime>startTime && nowTime>endTime){
+            showVal = 1000;
+        }
+        ProgressBarWater* tempRp = (ProgressBarWater*)m_rp;
+        tempRp->setValue(showVal);
     }
+
 }
 
 void TimerKiller::slt_show(){
@@ -220,7 +202,7 @@ void TimerKiller::slt_taskChange(){
     QString themeStr = currentTask.getTheme();
     int themeIndex = -1;
     for(int i=0;i<m_themes.getData().size();i++){
-        if(m_themes.getData()[i].getName() == themeStr){
+        if(m_themes.getData()[i]->getName() == themeStr){
             themeIndex = i;
             break;
         }
@@ -228,24 +210,71 @@ void TimerKiller::slt_taskChange(){
 
     if(themeIndex>=0){
         sectimer->stop();
-        Theme& currentTheme = const_cast<Theme&>(m_themes.getData().at(themeIndex));
-        m_rp->setLineWidth(currentTheme.getLineWidth());
-        m_rp->setLineColor(currentTheme.getLineColor());
-        m_rp->setBorderWidth(currentTheme.getBorderWidth());
-        m_rp->setBorderColor(currentTheme.getBorderColor());
-        m_rp->setBgColor(currentTheme.getBgColor());
-        //m_rp->update();
 
+        Theme* tempTheme = m_themes.getData()[themeIndex];
+        taskWedgitShow(tempTheme);
         m_rp->setToolTip(currentTask.getName());
 
         startTime = currentTask.getStart();
         endTime = currentTask.getEnd();
-        qDebug()<<"start time:"<<startTime.toString(Qt::ISODate);
-        qDebug()<<"end time:"<<endTime.toString(Qt::ISODate);
+        //qDebug()<<"start time:"<<startTime.toString(Qt::ISODate);
+        //qDebug()<<"end time:"<<endTime.toString(Qt::ISODate);
 
         if(endTime<startTime){
             endTime = startTime;
         }
         sectimer->start();
     }
+}
+
+void TimerKiller::taskWedgitShow(Theme* th){
+    QHBoxLayout *layout = (QHBoxLayout *)this->layout();
+
+    if(m_rp != nullptr){
+
+        //delete m_rp;
+
+        if(!layout->isEmpty()){
+            layout->removeWidget(m_rp);
+            m_rp->deleteLater();
+        }
+    }
+
+    //QString className = typeid(*th).name();//th->metaObject()->className();
+    const std::type_info& ti = typeid(*th);
+    if(ti == typeid(BallTheme)){
+        m_rp = new RoundProgress(this);
+        RoundProgress* tempRP = (RoundProgress*)m_rp;
+        layout->setMargin(0);
+        layout->setSpacing(0);
+        layout->addWidget(m_rp);
+        connect(m_rp,SIGNAL(sgn_drag(int,int)),this,SLOT(slt_drag(int,int)));
+        //m_rp->setToolTip(tr("this is tool tip"));
+        connect(m_rp,SIGNAL(sgn_rightClicked(QPoint)),this,SLOT(slt_rightClicked(QPoint)));
+
+        BallTheme* tempTheme = (BallTheme*)th;
+        tempRP->setLineWidth(tempTheme->getLineWidth());
+        tempRP->setLineColor(tempTheme->getLineColor());
+        tempRP->setBorderWidth(tempTheme->getBorderWidth());
+        tempRP->setBorderColor(tempTheme->getBorderColor());
+        tempRP->setBgColor(tempTheme->getBgColor());
+    }
+    else if(ti == typeid(WaterTheme)){
+        m_rp = new ProgressBarWater(this);
+        ProgressBarWater* tempRP = (ProgressBarWater*)m_rp;
+        layout->setMargin(0);
+        layout->setSpacing(0);
+        layout->addWidget(m_rp);
+        connect(m_rp,SIGNAL(sgn_drag(int,int)),this,SLOT(slt_drag(int,int)));
+        connect(m_rp,SIGNAL(sgn_rightClicked(QPoint)),this,SLOT(slt_rightClicked(QPoint)));
+
+        WaterTheme* tempTheme = (WaterTheme*)th;
+        tempRP->setWaterDensity(tempTheme->getWaterDensity());
+        tempRP->setWaterHeight(tempTheme->getWaterHeight());
+        tempRP->setBorderWidth(tempTheme->getBorderWidth());
+        tempRP->setUsedColor(tempTheme->getUsedColor());
+        tempRP->setUnUsedColor(tempTheme->getUnUsedColor());
+        tempRP->setTextColor(tempTheme->getTextColor());
+    }
+    timerProgress();
 }

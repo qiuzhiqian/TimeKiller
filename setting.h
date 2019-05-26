@@ -4,6 +4,7 @@
 #include <QWidget>
 
 #include "roundprogress.h"
+#include "progressbarwater.h"
 
 #include "theme.h"
 #include "task.h"
@@ -21,14 +22,14 @@ public:
     Setting(ThemeList* tl,TaskList* tkl, QWidget *parent = nullptr);
     ~Setting();
 
-    void themeLoad(Theme th);
+    void themeLoad(Theme *th);
 
     //void addTask();
 
 private:
     Ui::Setting *ui;
 
-    RoundProgress* m_rp;
+    QWidget* m_rp;
 
     ThemeList* m_themeList;
     TaskList* m_taskList;
@@ -37,6 +38,7 @@ private:
 
 public Q_SLOTS:
     void slt_themeChanged(int index);
+    void slt_styleChanged(int index);
     void slt_addTask();
     void slt_removeTask(int row,int column);
 };

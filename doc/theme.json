@@ -6,7 +6,8 @@
             "borderWidth": 5,
             "lineColor": "#ffa5dc3e",
             "lineWidth": 10,
-            "name": "default"
+            "name": "default",
+            "style": "round"
         },
         {
             "bgColor": "#aa23b1cc",
@@ -14,7 +15,18 @@
             "borderWidth": 8,
             "lineColor": "#ff006622",
             "lineWidth": 12,
-            "name": "diy1"
+            "name": "diy1",
+            "style": "round"
+        },
+        {
+            "borderWidth": 4,
+            "name": "diy2",
+            "style": "water",
+            "textColor": "#ff6d32a3",
+            "unUsedColor": "#aaaae0a7",
+            "usedColor": "#ff0363ba",
+            "waterDensity": 2,
+            "waterHeight": 0.03
         }
     ]
 }
